@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحليل المشاعر - الإشعارات</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- أيقونات Lucide -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <!-- الأنماط المشتركة -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="gradient-bg">
+    <div class="flex flex-col md:flex-row min-h-screen">
+        <!-- زر فتح/إغلاق الشريط الجانبي (للجوال) -->
+        <button id="sidebar-toggle" class="md:hidden fixed top-4 left-4 z-50 bg-white p-2 rounded-full shadow-lg">
+            <i data-lucide="menu" class="w-5 h-5 md:w-6 md:h-6"></i>
+        </button>
+
+        <!-- الشريط الجانبي -->
+        <div class="sidebar bg-gradient-to-b from-white to-blue-50/30 h-screen border-l border-gray-200/50 desktop-sidebar tablet-w-64">
+            <!-- رأس الشريط الجانبي -->
+            <div class="p-4 md:p-6 border-b border-gray-200/50">
+                <div class="flex items-center space-x-3 space-x-reverse mb-4 md:mb-6">
+                    <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center">
+                        <span class="text-white font-bold text-lg user-avatar">SA</span>
+                    </div>
+                    <div>
+                        <h2 class="font-semibold text-gray-900 text-sm md:text-base user-name">تحليل المشاعر</h2>
+                        <p class="text-xs md:text-sm text-gray-600 user-email">مساعدك الذكي للتحليل</p>
+                    </div>
+                </div>
+
+                <!-- زر التحليل الجديد -->
+                <button class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2 md:py-3 rounded-xl font-semibold flex items-center justify-center space-x-2 space-x-reverse mb-3 md:mb-4 hover:shadow-lg transition-shadow btn-responsive">
+                    <i data-lucide="plus-circle" class="icon-responsive"></i>
+                    <span>تحليل جديد</span>
+                </button>
+
+                <!-- شريط البحث -->
+                <div class="relative">
+                    <i data-lucide="search" class="absolute right-3 top-3 text-gray-400 icon-responsive"></i>
+                    <input type="text" placeholder="ابحث في التقارير..." class="w-full pl-4 pr-12 py-2 md:py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 form-input-responsive">
+                </div>
+            </div>
+
+            <!-- قائمة التنقل -->
+            <nav class="p-3 md:p-4">
+                <a href="results.html" data-page="results" class="nav-item flex items-center space-x-3 space-x-reverse p-2 md:p-3 rounded-xl text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors mb-2 nav-item-responsive">
+                    <i data-lucide="bar-chart-3" class="icon-responsive"></i>
+                    <span class="text-sm md:text-base">لوحة التحكم</span>
+                </a>
+                <a href="chat.html" data-page="chat" class="nav-item flex items-center space-x-3 space-x-reverse p-2 md:p-3 rounded-xl text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors mb-2 nav-item-responsive">
+                    <i data-lucide="message-square" class="icon-responsive"></i>
+                    <span class="text-sm md:text-base">المساعد الذكي</span>
+                </a>
+                <a href="results.html" data-page="results" class="nav-item flex items-center space-x-3 space-x-reverse p-2 md:p-3 rounded-xl text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors mb-2 nav-item-responsive">
+                    <i data-lucide="file-text" class="icon-responsive"></i>
+                    <span class="text-sm md:text-base">التقارير</span>
+                </a>
+                <a href="notifications.html" data-page="notifications" class="nav-item flex items-center space-x-3 space-x-reverse p-2 md:p-3 rounded-xl text-blue-600 bg-blue-50 transition-colors mb-2 nav-item-responsive">
+                    <i data-lucide="bell" class="icon-responsive"></i>
+                    <span class="text-sm md:text-base">الإشعارات</span>
+                </a>
+                <a href="settings.html" data-page="settings" class="nav-item flex items-center space-x-3 space-x-reverse p-2 md:p-3 rounded-xl text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors mb-2 nav-item-responsive">
+                    <i data-lucide="settings" class="icon-responsive"></i>
+                    <span class="text-sm md:text-base">الإعدادات</span>
+                </a>
+                <a href="#" onclick="logout()" class="nav-item flex items-center space-x-3 space-x-reverse p-2 md:p-3 rounded-xl text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors mb-2 nav-item-responsive">
+                    <i data-lucide="log-out" class="icon-responsive"></i>
+                    <span class="text-sm md:text-base">تسجيل الخروج</span>
+                </a>
+            </nav>
+
+            <!-- الإحصائيات السريعة -->
+            <div class="p-3 md:p-4 mt-2 md:mt-4">
+                <div class="bg-white/50 rounded-2xl p-3 md:p-4 border border-gray-200/50">
+                    <h3 class="font-semibold text-gray-900 mb-2 md:mb-3 text-sm md:text-base">إحصائيات هذا الشهر</h3>
+                    <div class="space-y-1 md:space-y-2">
+                        <div class="flex justify-between text-xs md:text-sm">
+                            <span class="text-gray-600">عدد التحليلات</span>
+                            <span class="font-semibold">24</span>
+                        </div>
+                        <div class="flex justify-between text-xs md:text-sm">
+                            <span class="text-gray-600">التقارير المحفوظة</span>
+                            <span class="font-semibold">18</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- المحتوى الرئيسي -->
+        <div class="flex-1 desktop-main">
+            <div class="container-padding p-4 md:p-6">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 md:mb-8 mobile-stack">
+                    <div>
+                        <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2 responsive-heading">الإشعارات</h1>
+                        <p class="text-gray-600 text-sm md:text-base">إدارة الإشعارات والتنبيهات الخاصة بحسابك</p>
+                    </div>
+                    <div class="flex space-x-3 space-x-reverse mt-4 md:mt-0">
+                        <button class="bg-gray-100 text-gray-700 px-4 md:px-6 py-2 md:py-3 rounded-xl font-medium hover:bg-gray-200 transition-colors flex items-center space-x-2 space-x-reverse btn-responsive">
+                            <i data-lucide="filter" class="icon-responsive"></i>
+                            <span>تصفية</span>
+                        </button>
+                        <button id="mark-all-read" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 md:px-6 py-2 md:py-3 rounded-xl font-semibold hover:shadow-lg transition-shadow flex items-center space-x-2 space-x-reverse btn-responsive">
+                            <i data-lucide="check-circle" class="icon-responsive"></i>
+                            <span>تعيين الكل كمقروء</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="glass-effect rounded-2xl overflow-hidden card-responsive">
+                    <!-- إشعار جديد -->
+                    <div class="p-4 border-b border-gray-200 bg-blue-50 notification-item" data-id="1" data-read="false">
+                        <div class="flex items-start space-x-4 space-x-reverse">
+                            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0">
+                                <i data-lucide="check-circle" class="text-green-600 icon-responsive"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h3 class="font-medium text-gray-900 text-sm md:text-base">التحليل #1234 اكتمل</h3>
+                                    <span class="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0 mt-2 notification-dot"></span>
+                                </div>
+                                <p class="text-gray-600 text-sm md:text-base mb-2">تم الانتهاء من تحليل صفحة فيسبوك بنجاح. يمكنك الآن عرض النتائج والتحليلات التفصيلية.</p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xs text-gray-500">منذ 5 دقائق</span>
+                                    <div class="flex space-x-2 space-x-reverse">
+                                        <button class="text-blue-600 hover:text-blue-700 text-xs font-medium">عرض النتائج</button>
+                                        <button class="text-gray-500 hover:text-gray-700 text-xs">تجاهل</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- إشعارات أخرى -->
+                    <div class="p-4 border-b border-gray-200 notification-item" data-id="2" data-read="false">
+                        <div class="flex items-start space-x-4 space-x-reverse">
+                            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0">
+                                <i data-lucide="bar-chart-3" class="text-blue-600 icon-responsive"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h3 class="font-medium text-gray-900 text-sm md:text-base">تقريرك جاهز للعرض</h3>
+                                    <span class="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0 mt-2 notification-dot"></span>
+                                </div>
+                                <p class="text-gray-600 text-sm md:text-base mb-2">تم إنشاء التقرير الشهري لتحليلات المشاعر. يحتوي التقرير على إحصائيات مفصلة وتوصيات عملية.</p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xs text-gray-500">منذ ساعة</span>
+                                    <div class="flex space-x-2 space-x-reverse">
+                                        <button class="text-blue-600 hover:text-blue-700 text-xs font-medium">عرض التقرير</button>
+                                        <button class="text-gray-500 hover:text-gray-700 text-xs">تجاهل</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-4 border-b border-gray-200 notification-item" data-id="3" data-read="true">
+                        <div class="flex items-start space-x-4 space-x-reverse">
+                            <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0">
+                                <i data-lucide="alert-triangle" class="text-yellow-600 icon-responsive"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h3 class="font-medium text-gray-900 text-sm md:text-base">هناك زيادة في التعليقات السلبية</h3>
+                                    <span class="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0 mt-2 notification-dot hidden"></span>
+                                </div>
+                                <p class="text-gray-600 text-sm md:text-base mb-2">لاحظنا زيادة في التعليقات السلبية على صفحة فيسبوك خلال الـ24 ساعة الماضية. نوصي بمراجعة المحتوى المنشور.</p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xs text-gray-500">منذ يومين</span>
+                                    <div class="flex space-x-2 space-x-reverse">
+                                        <button class="text-blue-600 hover:text-blue-700 text-xs font-medium">عرض التفاصيل</button>
+                                        <button class="text-gray-500 hover:text-gray-700 text-xs">تجاهل</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-4 notification-item" data-id="4" data-read="true">
+                        <div class="flex items-start space-x-4 space-x-reverse">
+                            <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0">
+                                <i data-lucide="bell" class="text-purple-600 icon-responsive"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h3 class="font-medium text-gray-900 text-sm md:text-base">تذكير: لديك 3 تحليلات غير مكتملة</h3>
+                                    <span class="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0 mt-2 notification-dot hidden"></span>
+                                </div>
+                                <p class="text-gray-600 text-sm md:text-base mb-2">أنشأت 3 تحليلات لم تكمل إعدادها بعد. يمكنك استكمالها الآن أو حذفها إذا لم تعد بحاجة إليها.</p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xs text-gray-500">منذ 3 أيام</span>
+                                    <div class="flex space-x-2 space-x-reverse">
+                                        <button class="text-blue-600 hover:text-blue-700 text-xs font-medium">استكمال التحليلات</button>
+                                        <button class="text-gray-500 hover:text-gray-700 text-xs">تجاهل</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- الإشعارات القديمة -->
+                <div class="mt-6 md:mt-8">
+                    <h2 class="text-lg md:text-xl font-semibold text-gray-900 mb-4">الإشعارات القديمة</h2>
+                    <div class="glass-effect rounded-2xl overflow-hidden card-responsive">
+                        <div class="p-4 border-b border-gray-200 opacity-70">
+                            <div class="flex items-start space-x-4 space-x-reverse">
+                                <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0">
+                                    <i data-lucide="zap" class="text-gray-600 icon-responsive"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="font-medium text-gray-900 text-sm md:text-base">تحسينات جديدة في النظام</h3>
+                                    <p class="text-gray-600 text-sm md:text-base mb-2">تم إضافة ميزات جديدة لتحسين تجربة تحليل المشاعر. اطلع عليها الآن.</p>
+                                    <span class="text-xs text-gray-500">منذ أسبوع</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4 border-b border-gray-200 opacity-70">
+                            <div class="flex items-start space-x-4 space-x-reverse">
+                                <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0">
+                                    <i data-lucide="users" class="text-gray-600 icon-responsive"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="font-medium text-gray-900 text-sm md:text-base">دعوة لفريق العمل</h3>
+                                    <p class="text-gray-600 text-sm md:text-base mb-2">تمت دعوتك للانضمام إلى فريق تحليل المشاعر في مؤسستك.</p>
+                                    <span class="text-xs text-gray-500">منذ أسبوعين</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4 opacity-70">
+                            <div class="flex items-start space-x-4 space-x-reverse">
+                                <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0">
+                                    <i data-lucide="star" class="text-gray-600 icon-responsive"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="font-medium text-gray-900 text-sm md:text-base">ترقية الحساب</h3>
+                                    <p class="text-gray-600 text-sm md:text-base mb-2">تهانينا! تمت ترقية حسابك إلى الإصدار المميز.</p>
+                                    <span class="text-xs text-gray-500">منذ شهر</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- طبقة التعتيم للجوال -->
+        <div id="overlay" class="overlay"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/navigation.js"></script>
+    <script>
+        // إدارة الإشعارات
+        document.addEventListener('DOMContentLoaded', function() {
+            const markAllReadBtn = document.getElementById('mark-all-read');
+            const notificationItems = document.querySelectorAll('.notification-item');
+            
+            // تعيين الكل كمقروء
+            if (markAllReadBtn) {
+                markAllReadBtn.addEventListener('click', function() {
+                    notificationItems.forEach(item => {
+                        item.setAttribute('data-read', 'true');
+                        item.classList.remove('bg-blue-50');
+                        const dot = item.querySelector('.notification-dot');
+                        if (dot) dot.classList.add('hidden');
+                    });
+                    
+                    // إظهار رسالة نجاح
+                    alert('تم تعيين جميع الإشعارات كمقروءة');
+                });
+            }
+            
+            // عند النقر على إشعار، تعيينه كمقروء
+            notificationItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    if (!e.target.classList.contains('ignore-notification')) {
+                        this.setAttribute('data-read', 'true');
+                        this.classList.remove('bg-blue-50');
+                        const dot = this.querySelector('.notification-dot');
+                        if (dot) dot.classList.add('hidden');
+                    }
+                });
+            });
+            
+            // تحديث معلومات المستخدم
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if (user) {
+                const userElements = document.querySelectorAll('.user-name, .user-email, .user-avatar');
+                userElements.forEach(element => {
+                    if (element.classList.contains('user-name')) {
+                        element.textContent = user.name;
+                    } else if (element.classList.contains('user-email')) {
+                        element.textContent = user.email;
+                    } else if (element.classList.contains('user-avatar')) {
+                        element.textContent = user.avatar;
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

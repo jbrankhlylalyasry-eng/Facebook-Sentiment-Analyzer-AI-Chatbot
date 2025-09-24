@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحليل المشاعر - المساعد الذكي</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- أيقونات Lucide -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <!-- الأنماط المشتركة -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="gradient-bg">
+    <div class="flex flex-col md:flex-row h-screen">
+        <!-- زر فتح/إغلاق الشريط الجانبي (للجوال) -->
+        <button id="sidebar-toggle" class="md:hidden fixed top-4 left-4 z-50 bg-white p-2 rounded-full shadow-lg">
+            <i data-lucide="menu" class="w-5 h-5 md:w-6 md:h-6"></i>
+        </button>
+
+        <!-- الشريط الجانبي -->
+        <div class="sidebar bg-gradient-to-b from-white to-blue-50/30 h-screen border-l border-gray-200/50 desktop-sidebar tablet-w-64">
+            <!-- رأس الشريط الجانبي -->
+            <div class="p-4 md:p-6 border-b border-gray-200/50">
+                <div class="flex items-center space-x-3 space-x-reverse mb-4 md:mb-6">
+                    <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center">
+                        <span class="text-white font-bold text-lg user-avatar">SA</span>
+                    </div>
+                    <div>
+                        <h2 class="font-semibold text-gray-900 text-sm md:text-base user-name">تحليل المشاعر</h2>
+                        <p class="text-xs md:text-sm text-gray-600 user-email">مساعدك الذكي للتحليل</p>
+                    </div>
+                </div>
+
+                <!-- زر التحليل الجديد -->
+                <button class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2 md:py-3 rounded-xl font-semibold flex items-center justify-center space-x-2 space-x-reverse mb-3 md:mb-4 hover:shadow-lg transition-shadow btn-responsive">
+                    <i data-lucide="plus-circle" class="icon-responsive"></i>
+                    <span>تحليل جديد</span>
+                </button>
+
+                <!-- شريط البحث -->
+                <div class="relative">
+                    <i data-lucide="search" class="absolute right-3 top-3 text-gray-400 icon-responsive"></i>
+                    <input type="text" placeholder="ابحث في التقارير..." class="w-full pl-4 pr-12 py-2 md:py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 form-input-responsive">
+                </div>
+            </div>
+
+            <!-- قائمة التنقل -->
+            <nav class="p-3 md:p-4">
+                <a href="results.html" class="nav-item flex items-center space-x-3 space-x-reverse p-2 md:p-3 rounded-xl text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors mb-2 nav-item-responsive">
+                    <i data-lucide="bar-chart-3" class="icon-responsive"></i>
+                    <span class="text-sm md:text-base">لوحة التحكم</span>
+                </a>
+                <a href="chat.html" class="nav-item flex items-center space-x-3 space-x-reverse p-2 md:p-3 rounded-xl text-blue-600 bg-blue-50 transition-colors mb-2 nav-item-responsive">
+                    <i data-lucide="message-square" class="icon-responsive"></i>
+                    <span class="text-sm md:text-base">المساعد الذكي</span>
+                </a>
+                <a href="results.html" class="nav-item flex items-center space-x-3 space-x-reverse p-2 md:p-3 rounded-xl text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors mb-2 nav-item-responsive">
+                    <i data-lucide="file-text" class="icon-responsive"></i>
+                    <span class="text-sm md:text-base">التقارير</span>
+                </a>
+                <a href="notifications.html" class="nav-item flex items-center space-x-3 space-x-reverse p-2 md:p-3 rounded-xl text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors mb-2 nav-item-responsive">
+                    <i data-lucide="bell" class="icon-responsive"></i>
+                    <span class="text-sm md:text-base">الإشعارات</span>
+                </a>
+                <a href="settings.html" class="nav-item flex items-center space-x-3 space-x-reverse p-2 md:p-3 rounded-xl text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors mb-2 nav-item-responsive">
+                    <i data-lucide="settings" class="icon-responsive"></i>
+                    <span class="text-sm md:text-base">الإعدادات</span>
+                </a>
+                <a href="#" onclick="logout()" class="nav-item flex items-center space-x-3 space-x-reverse p-2 md:p-3 rounded-xl text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors mb-2 nav-item-responsive">
+                    <i data-lucide="log-out" class="icon-responsive"></i>
+                    <span class="text-sm md:text-base">تسجيل الخروج</span>
+                </a>
+            </nav>
+
+            <!-- الإحصائيات السريعة -->
+            <div class="p-3 md:p-4 mt-2 md:mt-4">
+                <div class="bg-white/50 rounded-2xl p-3 md:p-4 border border-gray-200/50">
+                    <h3 class="font-semibold text-gray-900 mb-2 md:mb-3 text-sm md:text-base">إحصائيات هذا الشهر</h3>
+                    <div class="space-y-1 md:space-y-2">
+                        <div class="flex justify-between text-xs md:text-sm">
+                            <span class="text-gray-600">عدد التحليلات</span>
+                            <span class="font-semibold">24</span>
+                        </div>
+                        <div class="flex justify-between text-xs md:text-sm">
+                            <span class="text-gray-600">التقارير المحفوظة</span>
+                            <span class="font-semibold">18</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- نافذة المحادثة -->
+        <div class="flex-1 flex flex-col desktop-main">
+            <!-- الرأس -->
+            <div class="bg-white/80 backdrop-blur-lg border-b border-gray-200/50 p-4 md:p-6">
+                <div class="flex items-center space-x-3 space-x-reverse">
+                    <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-green-500 to-blue-500 rounded-2xl flex items-center justify-center">
+                        <i data-lucide="bot" class="text-white icon-responsive"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-lg md:text-xl font-semibold text-gray-900">مساعد التحليل الذكي</h1>
+                        <p class="text-gray-600 text-sm md:text-base">أساعدك في تحليل مشاعر التعليقات على فيسبوك</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- الرسائل -->
+            <div id="chat-messages" class="flex-1 overflow-y-auto p-4 md:p-6 space-y-4 chat-messages">
+                <!-- سيتم تحميل الرسائل هنا -->
+            </div>
+
+            <!-- منطقة الإدخال -->
+            <div class="bg-white/80 backdrop-blur-lg border-t border-gray-200/50 p-4 md:p-6 chat-input-container">
+                <form id="chat-form" class="flex space-x-3 space-x-reverse">
+                    <input type="text" id="message-input" placeholder="اكتب رسالتك هنا..." class="flex-1 bg-gray-50 border border-gray-200 rounded-2xl px-4 py-2 md:py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent form-input-responsive">
+                    <button type="submit" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-2xl p-2 md:p-3 hover:shadow-lg transition-shadow">
+                        <i data-lucide="send" class="icon-responsive"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- المعلومات المساعدة -->
+        <div class="hidden lg:block w-80 bg-white/80 backdrop-blur-lg border-r border-gray-200/50 p-4 md:p-6">
+            <h2 class="text-lg font-semibold text-gray-900 mb-3 md:mb-4">الأوامر السريعة</h2>
+            <div class="space-y-2 md:space-y-3">
+                <button class="w-full text-right p-2 md:p-3 rounded-xl border border-gray-200 hover:border-blue-200 hover:bg-blue-50 transition-colors">
+                    <div class="flex items-center space-x-3 space-x-reverse">
+                        <span class="text-2xl">📊</span>
+                        <div class="flex-1">
+                            <h3 class="font-medium text-gray-900 text-sm md:text-base">تحليل صفحة فيسبوك</h3>
+                            <p class="text-xs md:text-sm text-gray-600">تحليل المشاعر لصفحة كاملة</p>
+                        </div>
+                    </div>
+                </button>
+                <button class="w-full text-right p-2 md:p-3 rounded-xl border border-gray-200 hover:border-blue-200 hover:bg-blue-50 transition-colors">
+                    <div class="flex items-center space-x-3 space-x-reverse">
+                        <span class="text-2xl">📱</span>
+                        <div class="flex-1">
+                            <h3 class="font-medium text-gray-900 text-sm md:text-base">تحليل منشور محدد</h3>
+                            <p class="text-xs md:text-sm text-gray-600">تحليل التعليقات على منشور معين</p>
+                        </div>
+                    </div>
+                </button>
+                <button class="w-full text-right p-2 md:p-3 rounded-xl border border-gray-200 hover:border-blue-200 hover:bg-blue-50 transition-colors">
+                    <div class="flex items-center space-x-3 space-x-reverse">
+                        <span class="text-2xl">📈</span>
+                        <div class="flex-1">
+                            <h3 class="font-medium text-gray-900 text-sm md:text-base">عرض التقارير</h3>
+                            <p class="text-xs md:text-sm text-gray-600">عرض التحليلات السابقة</p>
+                        </div>
+                    </div>
+                </button>
+                <button class="w-full text-right p-2 md:p-3 rounded-xl border border-gray-200 hover:border-blue-200 hover:bg-blue-50 transition-colors">
+                    <div class="flex items-center space-x-3 space-x-reverse">
+                        <span class="text-2xl">⚙️</span>
+                        <div class="flex-1">
+                            <h3 class="font-medium text-gray-900 text-sm md:text-base">الإعدادات</h3>
+                            <p class="text-xs md:text-sm text-gray-600">تخصيص إعدادات التحليل</p>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- طبقة التعتيم للجوال -->
+        <div id="overlay" class="overlay"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/chat.js"></script>
+</body>
+</html>

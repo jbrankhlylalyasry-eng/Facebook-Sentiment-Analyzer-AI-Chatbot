@@ -1,0 +1,269 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap');
+
+:root {
+    --primary-color: #3b82f6;
+    --secondary-color: #8b5cf6;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --error-color: #ef4444;
+}
+
+body {
+    font-family: 'Tajawal', sans-serif;
+    direction: rtl;
+}
+
+.glass-effect {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.gradient-bg {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #fae8ff 100%);
+    min-height: 100vh;
+}
+
+.container-padding {
+    padding: 1rem;
+}
+
+/* تحسينات للشاشات الصغيرة (جوال) */
+@media (max-width: 640px) {
+    .container-padding {
+        padding: 1rem;
+    }
+    
+    .mobile-full {
+        width: 100%;
+    }
+    
+    .mobile-stack {
+        flex-direction: column;
+    }
+    
+    .mobile-text-center {
+        text-align: center;
+    }
+    
+    .mobile-mb-4 {
+        margin-bottom: 1rem;
+    }
+    
+    .mobile-p-4 {
+        padding: 1rem;
+    }
+    
+    .mobile-rounded-lg {
+        border-radius: 0.5rem;
+    }
+    
+    .sidebar {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 85%;
+        height: 100%;
+        z-index: 50;
+        transition: right 0.3s ease-in-out;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .sidebar.open {
+        right: 0;
+    }
+    
+    .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 40;
+    }
+    
+    .overlay.active {
+        display: block;
+    }
+    
+    .chat-input-container {
+        padding: 1rem;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        border-top: 1px solid #e5e7eb;
+    }
+    
+    .chat-messages {
+        padding-bottom: 80px;
+    }
+    
+    .auth-card {
+        margin: 1rem;
+        width: calc(100% - 2rem);
+    }
+}
+
+/* تحسينات للشاشات المتوسطة (تابلت) */
+@media (min-width: 641px) and (max-width: 1024px) {
+    .tablet-w-64 {
+        width: 16rem;
+    }
+    
+    .tablet-flex-col {
+        flex-direction: column;
+    }
+    
+    .tablet-p-6 {
+        padding: 1.5rem;
+    }
+    
+    .tablet-mb-6 {
+        margin-bottom: 1.5rem;
+    }
+    
+    .sidebar {
+        width: 20rem;
+    }
+    
+    .chat-container {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .chat-messages {
+        flex: 1;
+        overflow-y: auto;
+    }
+}
+
+/* تحسينات للشاشات الكبيرة (ديسكتوب) */
+@media (min-width: 1025px) {
+    .desktop-sidebar {
+        width: 20rem;
+    }
+    
+    .desktop-main {
+        width: calc(100% - 20rem);
+    }
+    
+    .desktop-p-8 {
+        padding: 2rem;
+    }
+    
+    .desktop-grid-cols-3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* تحسينات عامة للاستجابة */
+.responsive-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+.responsive-text {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+}
+
+.responsive-heading {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.responsive-padding {
+    padding: clamp(1rem, 3vw, 2rem);
+}
+
+.btn-responsive {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+}
+
+@media (max-width: 640px) {
+    .btn-responsive {
+        padding: 1rem 1.5rem;
+        font-size: 1.1rem;
+    }
+}
+
+.chart-container {
+    position: relative;
+    height: 300px;
+    width: 100%;
+}
+
+@media (max-width: 640px) {
+    .chart-container {
+        height: 250px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .chart-container {
+        height: 350px;
+    }
+}
+
+.card-responsive {
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+@media (max-width: 640px) {
+    .card-responsive {
+        border-radius: 0.75rem;
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+}
+
+.icon-responsive {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+@media (max-width: 640px) {
+    .icon-responsive {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+}
+
+.form-input-responsive {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+}
+
+@media (max-width: 640px) {
+    .form-input-responsive {
+        padding: 1rem;
+        font-size: 1.1rem;
+    }
+}
+
+.nav-item-responsive {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+}
+
+@media (max-width: 640px) {
+    .nav-item-responsive {
+        padding: 1rem;
+        font-size: 1.1rem;
+    }
+}
+
+.message-user {
+    border-radius: 1.5rem 1.5rem 0 1.5rem;
+}
+
+.message-bot {
+    border-radius: 1.5rem 1.5rem 1.5rem 0;
+}

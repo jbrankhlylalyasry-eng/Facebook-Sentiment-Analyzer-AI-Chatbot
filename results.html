@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحليل المشاعر - النتائج والتقارير</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- أيقونات Lucide -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <!-- الأنماط المشتركة -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="gradient-bg">
+    <div class="flex flex-col md:flex-row min-h-screen">
+        <!-- زر فتح/إغلاق الشريط الجانبي (للجوال) -->
+        <button id="sidebar-toggle" class="md:hidden fixed top-4 left-4 z-50 bg-white p-2 rounded-full shadow-lg">
+            <i data-lucide="menu" class="w-5 h-5 md:w-6 md:h-6"></i>
+        </button>
+
+        <!-- الشريط الجانبي -->
+        <div class="sidebar bg-gradient-to-b from-white to-blue-50/30 h-screen border-l border-gray-200/50 desktop-sidebar tablet-w-64">
+            <!-- رأس الشريط الجانبي -->
+            <div class="p-4 md:p-6 border-b border-gray-200/50">
+                <div class="flex items-center space-x-3 space-x-reverse mb-4 md:mb-6">
+                    <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center">
+                        <span class="text-white font-bold text-lg user-avatar">SA</span>
+                    </div>
+                    <div>
+                        <h2 class="font-semibold text-gray-900 text-sm md:text-base user-name">تحليل المشاعر</h2>
+                        <p class="text-xs md:text-sm text-gray-600 user-email">مساعدك الذكي للتحليل</p>
+                    </div>
+                </div>
+
+                <!-- زر التحليل الجديد -->
+                <button class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2 md:py-3 rounded-xl font-semibold flex items-center justify-center space-x-2 space-x-reverse mb-3 md:mb-4 hover:shadow-lg transition-shadow btn-responsive">
+                    <i data-lucide="plus-circle" class="icon-responsive"></i>
+                    <span>تحليل جديد</span>
+                </button>
+
+                <!-- شريط البحث -->
+                <div class="relative">
+                    <i data-lucide="search" class="absolute right-3 top-3 text-gray-400 icon-responsive"></i>
+                    <input type="text" placeholder="ابحث في التقارير..." class="w-full pl-4 pr-12 py-2 md:py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 form-input-responsive">
+                </div>
+            </div>
+
+            <!-- قائمة التنقل -->
+            <nav class="p-3 md:p-4">
+                <a href="results.html" data-page="results" class="nav-item flex items-center space-x-3 space-x-reverse p-2 md:p-3 rounded-xl text-blue-600 bg-blue-50 transition-colors mb-2 nav-item-responsive">
+                    <i data-lucide="bar-chart-3" class="icon-responsive"></i>
+                    <span class="text-sm md:text-base">لوحة التحكم</span>
+                </a>
+                <a href="chat.html" data-page="chat" class="nav-item flex items-center space-x-3 space-x-reverse p-2 md:p-3 rounded-xl text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors mb-2 nav-item-responsive">
+                    <i data-lucide="message-square" class="icon-responsive"></i>
+                    <span class="text-sm md:text-base">المساعد الذكي</span>
+                </a>
+                <a href="results.html" data-page="results" class="nav-item flex items-center space-x-3 space-x-reverse p-2 md:p-3 rounded-xl text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors mb-2 nav-item-responsive">
+                    <i data-lucide="file-text" class="icon-responsive"></i>
+                    <span class="text-sm md:text-base">التقارير</span>
+                </a>
+                <a href="notifications.html" data-page="notifications" class="nav-item flex items-center space-x-3 space-x-reverse p-2 md:p-3 rounded-xl text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors mb-2 nav-item-responsive">
+                    <i data-lucide="bell" class="icon-responsive"></i>
+                    <span class="text-sm md:text-base">الإشعارات</span>
+                </a>
+                <a href="settings.html" data-page="settings" class="nav-item flex items-center space-x-3 space-x-reverse p-2 md:p-3 rounded-xl text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors mb-2 nav-item-responsive">
+                    <i data-lucide="settings" class="icon-responsive"></i>
+                    <span class="text-sm md:text-base">الإعدادات</span>
+                </a>
+                <a href="#" onclick="logout()" class="nav-item flex items-center space-x-3 space-x-reverse p-2 md:p-3 rounded-xl text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors mb-2 nav-item-responsive">
+                    <i data-lucide="log-out" class="icon-responsive"></i>
+                    <span class="text-sm md:text-base">تسجيل الخروج</span>
+                </a>
+            </nav>
+
+            <!-- الإحصائيات السريعة -->
+            <div class="p-3 md:p-4 mt-2 md:mt-4">
+                <div class="bg-white/50 rounded-2xl p-3 md:p-4 border border-gray-200/50">
+                    <h3 class="font-semibold text-gray-900 mb-2 md:mb-3 text-sm md:text-base">إحصائيات هذا الشهر</h3>
+                    <div class="space-y-1 md:space-y-2">
+                        <div class="flex justify-between text-xs md:text-sm">
+                            <span class="text-gray-600">عدد التحليلات</span>
+                            <span class="font-semibold">24</span>
+                        </div>
+                        <div class="flex justify-between text-xs md:text-sm">
+                            <span class="text-gray-600">التقارير المحفوظة</span>
+                            <span class="font-semibold">18</span>
+                        </div>
+                        <div class="flex justify-between text-xs md:text-sm">
+                            <span class="text-gray-600">متوسط المشاعر الإيجابية</span>
+                            <span class="font-semibold text-green-600">72%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- المحتوى الرئيسي -->
+        <div class="flex-1 desktop-main">
+            <div class="container-padding p-4 md:p-6">
+                <!-- شريط العنوان -->
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 md:mb-8 mobile-stack">
+                    <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4 md:mb-0 responsive-heading">نتائج تحليل المشاعر</h1>
+                    <div class="flex space-x-3 space-x-reverse">
+                        <button class="bg-gray-100 text-gray-700 px-4 md:px-6 py-2 md:py-3 rounded-xl font-medium hover:bg-gray-200 transition-colors flex items-center space-x-2 space-x-reverse btn-responsive">
+                            <i data-lucide="filter" class="icon-responsive"></i>
+                            <span>تصفية النتائج</span>
+                        </button>
+                        <button class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 md:px-6 py-2 md:py-3 rounded-xl font-semibold hover:shadow-lg transition-shadow flex items-center space-x-2 space-x-reverse btn-responsive">
+                            <i data-lucide="download" class="icon-responsive"></i>
+                            <span>حمل التقرير</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ملخص سريع -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-8 responsive-grid">
+                    <div class="glass-effect rounded-2xl p-4 md:p-6 text-center card-responsive">
+                        <div class="w-12 h-12 md:w-16 md:h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
+                            <span class="text-2xl">👍</span>
+                        </div>
+                        <h3 class="text-xl md:text-2xl font-bold text-green-600">70%</h3>
+                        <p class="text-gray-600 text-sm md:text-base">إيجابي</p>
+                        <p class="text-xs text-gray-500 mt-1">+5% عن الشهر الماضي</p>
+                    </div>
+                    <div class="glass-effect rounded-2xl p-4 md:p-6 text-center card-responsive">
+                        <div class="w-12 h-12 md:w-16 md:h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
+                            <span class="text-2xl">👎</span>
+                        </div>
+                        <h3 class="text-xl md:text-2xl font-bold text-red-600">20%</h3>
+                        <p class="text-gray-600 text-sm md:text-base">سلبي</p>
+                        <p class="text-xs text-gray-500 mt-1">-2% عن الشهر الماضي</p>
+                    </div>
+                    <div class="glass-effect rounded-2xl p-4 md:p-6 text-center card-responsive">
+                        <div class="w-12 h-12 md:w-16 md:h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
+                            <span class="text-2xl">😐</span>
+                        </div>
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-600">10%</h3>
+                        <p class="text-gray-600 text-sm md:text-base">محايد</p>
+                        <p class="text-xs text-gray-500 mt-1">-3% عن الشهر الماضي</p>
+                    </div>
+                </div>
+
+                <!-- الرسوم البيانية -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-6 md:mb-8">
+                    <!-- الرسم البياني الدائري -->
+                    <div class="glass-effect rounded-2xl p-4 md:p-6 card-responsive">
+                        <h2 class="text-lg md:text-xl font-semibold text-gray-900 mb-3 md:mb-4">توزيع المشاعر</h2>
+                        <div class="chart-container">
+                            <canvas id="sentimentChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- التقدم الزمني -->
+                    <div class="glass-effect rounded-2xl p-4 md:p-6 card-responsive">
+                        <h2 class="text-lg md:text-xl font-semibold text-gray-900 mb-3 md:mb-4">التقدم الزمني</h2>
+                        <div class="chart-container">
+                            <canvas id="timelineChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- الكلمات المتكررة -->
+                <div class="glass-effect rounded-2xl p-4 md:p-6 mb-6 md:mb-8 card-responsive">
+                    <h2 class="text-lg md:text-xl font-semibold text-gray-900 mb-3 md:mb-4">أكثر الكلمات تكراراً</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                        <div>
+                            <h3 class="font-medium text-green-600 mb-3 text-sm md:text-base">كلمات إيجابية</h3>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-green-100 text-green-800 px-3 py-2 rounded-full text-sm flex items-center space-x-1 space-x-reverse">
+                                    <span>ممتاز</span>
+                                    <span class="text-xs bg-green-200 px-2 py-1 rounded-full">142</span>
+                                </span>
+                                <span class="bg-green-100 text-green-800 px-3 py-2 rounded-full text-sm flex items-center space-x-1 space-x-reverse">
+                                    <span>رائع</span>
+                                    <span class="text-xs bg-green-200 px-2 py-1 rounded-full">98</span>
+                                </span>
+                                <span class="bg-green-100 text-green-800 px-3 py-2 rounded-full text-sm flex items-center space-x-1 space-x-reverse">
+                                    <span>شكراً</span>
+                                    <span class="text-xs bg-green-200 px-2 py-1 rounded-full">76</span>
+                                </span>
+                                <span class="bg-green-100 text-green-800 px-3 py-2 rounded-full text-sm flex items-center space-x-1 space-x-reverse">
+                                    <span>جميل</span>
+                                    <span class="text-xs bg-green-200 px-2 py-1 rounded-full">65</span>
+                                </span>
+                                <span class="bg-green-100 text-green-800 px-3 py-2 rounded-full text-sm flex items-center space-x-1 space-x-reverse">
+                                    <span>مذهل</span>
+                                    <span class="text-xs bg-green-200 px-2 py-1 rounded-full">54</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="font-medium text-red-600 mb-3 text-sm md:text-base">كلمات سلبية</h3>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-red-100 text-red-800 px-3 py-2 rounded-full text-sm flex items-center space-x-1 space-x-reverse">
+                                    <span>مشكلة</span>
+                                    <span class="text-xs bg-red-200 px-2 py-1 rounded-full">87</span>
+                                </span>
+                                <span class="bg-red-100 text-red-800 px-3 py-2 rounded-full text-sm flex items-center space-x-1 space-x-reverse">
+                                    <span>سيء</span>
+                                    <span class="text-xs bg-red-200 px-2 py-1 rounded-full">63</span>
+                                </span>
+                                <span class="bg-red-100 text-red-800 px-3 py-2 rounded-full text-sm flex items-center space-x-1 space-x-reverse">
+                                    <span>غلط</span>
+                                    <span class="text-xs bg-red-200 px-2 py-1 rounded-full">45</span>
+                                </span>
+                                <span class="bg-red-100 text-red-800 px-3 py-2 rounded-full text-sm flex items-center space-x-1 space-x-reverse">
+                                    <span>بطيء</span>
+                                    <span class="text-xs bg-red-200 px-2 py-1 rounded-full">38</span>
+                                </span>
+                                <span class="bg-red-100 text-red-800 px-3 py-2 rounded-full text-sm flex items-center space-x-1 space-x-reverse">
+                                    <span>مزعج</span>
+                                    <span class="text-xs bg-red-200 px-2 py-1 rounded-full">29</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- التعليقات المميزة -->
+                <div class="glass-effect rounded-2xl p-4 md:p-6 mb-6 md:mb-8 card-responsive">
+                    <h2 class="text-lg md:text-xl font-semibold text-gray-900 mb-3 md:mb-4">التعليقات المميزة</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+                        <div class="bg-green-50 border border-green-200 rounded-xl p-4 md:p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <span class="text-green-600 text-xl">👍</span>
+                                    <span class="font-medium text-green-800 text-sm md:text-base">إيجابي</span>
+                                </div>
+                                <span class="text-xs text-green-600 bg-green-100 px-2 py-1 rounded-full">4.8/5</span>
+                            </div>
+                            <p class="text-gray-700 text-sm md:text-base mb-3">"المنتج رائع واستخدامه سهل، شكراً لكم على هذه الخدمة المميزة. أوصي به بشدة لأي شخص يبحث عن حل فعال."</p>
+                            <div class="flex justify-between items-center text-xs text-gray-500">
+                                <span>منذ 3 أيام</span>
+                                <span>بواسطة: أحمد س</span>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-red-50 border border-red-200 rounded-xl p-4 md:p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <span class="text-red-600 text-xl">👎</span>
+                                    <span class="font-medium text-red-800 text-sm md:text-base">سلبي</span>
+                                </div>
+                                <span class="text-xs text-red-600 bg-red-100 px-2 py-1 rounded-full">1.5/5</span>
+                            </div>
+                            <p class="text-gray-700 text-sm md:text-base mb-3">"واجهت مشكلة في التوصيل والتأخير كان مزعجاً جداً. خدمة العملاء لم تكن مفيدة كما توقعت."</p>
+                            <div class="flex justify-between items-center text-xs text-gray-500">
+                                <span>منذ يومين</span>
+                                <span>بواسطة: محمد ع</span>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-50 border border-gray-200 rounded-xl p-4 md:p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <span class="text-gray-600 text-xl">😐</span>
+                                    <span class="font-medium text-gray-800 text-sm md:text-base">محايد</span>
+                                </div>
+                                <span class="text-xs text-gray-600 bg-gray-100 px-2 py-1 rounded-full">3.2/5</span>
+                            </div>
+                            <p class="text-gray-700 text-sm md:text-base mb-3">"جربت المنتج وكان مقبولاً، أتمنى المزيد من التطوير في المستقبل. السعر معقول بالنسبة للميزات المقدمة."</p>
+                            <div class="flex justify-between items-center text-xs text-gray-500">
+                                <span>منذ 5 أيام</span>
+                                <span>بواسطة: فاطمة ر</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- التوصيات -->
+                <div class="glass-effect rounded-2xl p-4 md:p-6 card-responsive">
+                    <h2 class="text-lg md:text-xl font-semibold text-gray-900 mb-3 md:mb-4">التوصيات</h2>
+                    <div class="space-y-4 md:space-y-6">
+                        <div class="flex items-start space-x-4 space-x-reverse">
+                            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="thumbs-up" class="w-5 h-5 text-green-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-gray-900 text-sm md:text-base mb-2">نقاط القوة</h3>
+                                <p class="text-gray-600 text-sm md:text-base">المنتج يحصل على ردود فعل إيجابية بشكل عام، خاصة فيما يتعلق بسهولة الاستخدام والتصميم الجذاب. التعليقات الإيجابية تركز على جودة الخدمة وسرعة الأداء.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4 space-x-reverse">
+                            <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="alert-triangle" class="w-5 h-5 text-yellow-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-gray-900 text-sm md:text-base mb-2">مجالات التحسين</h3>
+                                <p class="text-gray-600 text-sm md:text-base">يجب تحسين خدمة التوصيل وتقليل وقت الانتظار بناءً على التعليقات السلبية. بعض المستخدمين أشاروا إلى صعوبة في فهم بعض الميزات المتقدمة.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4 space-x-reverse">
+                            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="trending-up" class="w-5 h-5 text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-gray-900 text-sm md:text-base mb-2">فرص النمو</h3>
+                                <p class="text-gray-600 text-sm md:text-base">يمكن الاستفادة من التعليقات الإيجابية في الحملات التسويقية المستقبلية. تطوير دليل استخدام أكثر تفصيلاً قد يساعد في تقليل التعليقات المحايدة.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- طبقة التعتيم للجوال -->
+        <div id="overlay" class="overlay"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/charts.js"></script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحليل المشاعر - تسجيل الدخول</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- أيقونات Lucide -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <!-- الأنماط المشتركة -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="gradient-bg">
+    <div class="flex items-center justify-center container-padding min-h-screen">
+        <div class="glass-effect rounded-3xl shadow-2xl p-6 md:p-8 w-full max-w-md auth-card">
+            <!-- الشعار -->
+            <div class="text-center mb-6 md:mb-8">
+                <div class="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl mx-auto mb-4 flex items-center justify-center">
+                    <span class="text-white text-xl md:text-2xl font-bold">SA</span>
+                </div>
+                <h1 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                    تحليل المشاعر
+                </h1>
+            </div>
+
+            <!-- التبويب -->
+            <div class="flex bg-gray-100 rounded-2xl p-1 mb-4 md:mb-6">
+                <button id="login-tab" class="login-tab flex-1 py-2 md:py-3 rounded-xl transition-all duration-300 bg-white shadow-lg text-blue-600 btn-responsive">
+                    تسجيل الدخول
+                </button>
+                <button id="signup-tab" class="signup-tab flex-1 py-2 md:py-3 rounded-xl transition-all duration-300 text-gray-600 hover:text-gray-900 btn-responsive">
+                    إنشاء حساب
+                </button>
+            </div>
+
+            <!-- نموذج التسجيل -->
+            <form id="signup-form" class="auth-form space-y-3 md:space-y-4 hidden">
+                <div class="relative">
+                    <i data-lucide="user" class="absolute right-3 top-3 text-gray-400 icon-responsive"></i>
+                    <input type="text" placeholder="اسم المستخدم" class="w-full pl-4 pr-12 py-2 md:py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 form-input-responsive">
+                </div>
+                
+                <div class="relative">
+                    <i data-lucide="mail" class="absolute right-3 top-3 text-gray-400 icon-responsive"></i>
+                    <input type="email" placeholder="البريد الإلكتروني" class="w-full pl-4 pr-12 py-2 md:py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 form-input-responsive">
+                </div>
+                
+                <div class="relative">
+                    <i data-lucide="lock" class="absolute right-3 top-3 text-gray-400 icon-responsive"></i>
+                    <input type="password" placeholder="كلمة المرور" class="w-full pl-4 pr-12 py-2 md:py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 form-input-responsive">
+                    <button type="button" class="absolute left-3 top-3 text-gray-400 hover:text-gray-600">
+                        <i data-lucide="eye" class="icon-responsive"></i>
+                    </button>
+                </div>
+                
+                <div class="relative">
+                    <i data-lucide="lock" class="absolute right-3 top-3 text-gray-400 icon-responsive"></i>
+                    <input type="password" placeholder="تأكيد كلمة المرور" class="w-full pl-4 pr-12 py-2 md:py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 form-input-responsive">
+                </div>
+                
+                <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2 md:py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-shadow btn-responsive">
+                    إنشاء حساب
+                </button>
+            </form>
+
+            <!-- نموذج الدخول -->
+            <form id="login-form" class="auth-form space-y-3 md:space-y-4">
+                <div class="relative">
+                    <i data-lucide="mail" class="absolute right-3 top-3 text-gray-400 icon-responsive"></i>
+                    <input type="text" placeholder="البريد أو اسم المستخدم" class="w-full pl-4 pr-12 py-2 md:py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 form-input-responsive">
+                </div>
+                
+                <div class="relative">
+                    <i data-lucide="lock" class="absolute right-3 top-3 text-gray-400 icon-responsive"></i>
+                    <input type="password" placeholder="كلمة المرور" class="w-full pl-4 pr-12 py-2 md:py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 form-input-responsive">
+                    <button type="button" class="absolute left-3 top-3 text-gray-400 hover:text-gray-600">
+                        <i data-lucide="eye" class="icon-responsive"></i>
+                    </button>
+                </div>
+                
+                <div class="flex justify-between items-center">
+                    <label class="flex items-center space-x-2 space-x-reverse">
+                        <input type="checkbox" class="rounded text-blue-600">
+                        <span class="text-sm text-gray-600">تذكرني</span>
+                    </label>
+                    <button type="button" class="text-sm text-blue-600 hover:text-blue-700">
+                        نسيت كلمة المرور؟
+                    </button>
+                </div>
+                
+                <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2 md:py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-shadow btn-responsive">
+                    تسجيل الدخول
+                </button>
+            </form>
+
+            <!-- التسجيل عبر وسائل التواصل -->
+            <div class="mt-4 md:mt-6">
+                <div class="relative mb-3 md:mb-4">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-gray-300"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-2 bg-white text-gray-500">أو سجل باستخدام</span>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-2 md:gap-3">
+                    <button class="flex items-center justify-center space-x-2 space-x-reverse p-2 md:p-3 border border-gray-300 rounded-xl hover:bg-gray-50 transition-colors btn-responsive">
+                        <i data-lucide="facebook" class="text-blue-600 icon-responsive"></i>
+                        <span class="text-sm md:text-base">فيسبوك</span>
+                    </button>
+                    <button class="flex items-center justify-center space-x-2 space-x-reverse p-2 md:p-3 border border-gray-300 rounded-xl hover:bg-gray-50 transition-colors btn-responsive">
+                        <i data-lucide="mail" class="text-red-600 icon-responsive"></i>
+                        <span class="text-sm md:text-base">جوجل</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

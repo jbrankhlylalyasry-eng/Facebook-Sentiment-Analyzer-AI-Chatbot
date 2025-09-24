@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحليل المشاعر - الإعدادات</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- أيقونات Lucide -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <!-- الأنماط المشتركة -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="gradient-bg">
+    <div class="flex flex-col md:flex-row min-h-screen">
+        <!-- زر فتح/إغلاق الشريط الجانبي (للجوال) -->
+        <button id="sidebar-toggle" class="md:hidden fixed top-4 left-4 z-50 bg-white p-2 rounded-full shadow-lg">
+            <i data-lucide="menu" class="w-5 h-5 md:w-6 md:h-6"></i>
+        </button>
+
+        <!-- الشريط الجانبي -->
+        <div class="sidebar bg-gradient-to-b from-white to-blue-50/30 h-screen border-l border-gray-200/50 desktop-sidebar tablet-w-64">
+            <!-- رأس الشريط الجانبي -->
+            <div class="p-4 md:p-6 border-b border-gray-200/50">
+                <div class="flex items-center space-x-3 space-x-reverse mb-4 md:mb-6">
+                    <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center">
+                        <span class="text-white font-bold text-lg user-avatar">SA</span>
+                    </div>
+                    <div>
+                        <h2 class="font-semibold text-gray-900 text-sm md:text-base user-name">تحليل المشاعر</h2>
+                        <p class="text-xs md:text-sm text-gray-600 user-email">مساعدك الذكي للتحليل</p>
+                    </div>
+                </div>
+
+                <!-- زر التحليل الجديد -->
+                <button class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2 md:py-3 rounded-xl font-semibold flex items-center justify-center space-x-2 space-x-reverse mb-3 md:mb-4 hover:shadow-lg transition-shadow btn-responsive">
+                    <i data-lucide="plus-circle" class="icon-responsive"></i>
+                    <span>تحليل جديد</span>
+                </button>
+
+                <!-- شريط البحث -->
+                <div class="relative">
+                    <i data-lucide="search" class="absolute right-3 top-3 text-gray-400 icon-responsive"></i>
+                    <input type="text" placeholder="ابحث في التقارير..." class="w-full pl-4 pr-12 py-2 md:py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 form-input-responsive">
+                </div>
+            </div>
+
+            <!-- قائمة التنقل -->
+            <nav class="p-3 md:p-4">
+                <a href="results.html" data-page="results" class="nav-item flex items-center space-x-3 space-x-reverse p-2 md:p-3 rounded-xl text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors mb-2 nav-item-responsive">
+                    <i data-lucide="bar-chart-3" class="icon-responsive"></i>
+                    <span class="text-sm md:text-base">لوحة التحكم</span>
+                </a>
+                <a href="chat.html" data-page="chat" class="nav-item flex items-center space-x-3 space-x-reverse p-2 md:p-3 rounded-xl text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors mb-2 nav-item-responsive">
+                    <i data-lucide="message-square" class="icon-responsive"></i>
+                    <span class="text-sm md:text-base">المساعد الذكي</span>
+                </a>
+                <a href="results.html" data-page="results" class="nav-item flex items-center space-x-3 space-x-reverse p-2 md:p-3 rounded-xl text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors mb-2 nav-item-responsive">
+                    <i data-lucide="file-text" class="icon-responsive"></i>
+                    <span class="text-sm md:text-base">التقارير</span>
+                </a>
+                <a href="notifications.html" data-page="notifications" class="nav-item flex items-center space-x-3 space-x-reverse p-2 md:p-3 rounded-xl text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors mb-2 nav-item-responsive">
+                    <i data-lucide="bell" class="icon-responsive"></i>
+                    <span class="text-sm md:text-base">الإشعارات</span>
+                </a>
+                <a href="settings.html" data-page="settings" class="nav-item flex items-center space-x-3 space-x-reverse p-2 md:p-3 rounded-xl text-blue-600 bg-blue-50 transition-colors mb-2 nav-item-responsive">
+                    <i data-lucide="settings" class="icon-responsive"></i>
+                    <span class="text-sm md:text-base">الإعدادات</span>
+                </a>
+                <a href="#" onclick="logout()" class="nav-item flex items-center space-x-3 space-x-reverse p-2 md:p-3 rounded-xl text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors mb-2 nav-item-responsive">
+                    <i data-lucide="log-out" class="icon-responsive"></i>
+                    <span class="text-sm md:text-base">تسجيل الخروج</span>
+                </a>
+            </nav>
+
+            <!-- الإحصائيات السريعة -->
+            <div class="p-3 md:p-4 mt-2 md:mt-4">
+                <div class="bg-white/50 rounded-2xl p-3 md:p-4 border border-gray-200/50">
+                    <h3 class="font-semibold text-gray-900 mb-2 md:mb-3 text-sm md:text-base">إحصائيات هذا الشهر</h3>
+                    <div class="space-y-1 md:space-y-2">
+                        <div class="flex justify-between text-xs md:text-sm">
+                            <span class="text-gray-600">عدد التحليلات</span>
+                            <span class="font-semibold">24</span>
+                        </div>
+                        <div class="flex justify-between text-xs md:text-sm">
+                            <span class="text-gray-600">التقارير المحفوظة</span>
+                            <span class="font-semibold">18</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- المحتوى الرئيسي -->
+        <div class="flex-1 desktop-main">
+            <div class="container-padding p-4 md:p-6">
+                <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6 md:mb-8 responsive-heading">الإعدادات</h1>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 md:gap-8">
+                    <!-- الشريط الجانبي للإعدادات -->
+                    <div class="lg:col-span-1">
+                        <div class="glass-effect rounded-2xl p-4 md:p-6 mb-6 card-responsive">
+                            <div class="flex items-center space-x-3 space-x-reverse mb-4 md:mb-6">
+                                <div class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center">
+                                    <span class="text-white font-bold text-lg md:text-xl user-avatar">MA</span>
+                                </div>
+                                <div>
+                                    <h2 class="font-semibold text-gray-900 text-sm md:text-base user-name">محمد أحمد</h2>
+                                    <p class="text-xs md:text-sm text-gray-600 user-email">mohamed@example.com</p>
+                                </div>
+                            </div>
+                            
+                            <nav class="space-y-2">
+                                <button data-tab="account" class="settings-tab w-full text-right p-2 md:p-3 rounded-xl bg-blue-50 text-blue-600 transition-colors nav-item-responsive">
+                                    معلومات الحساب
+                                </button>
+                                <button data-tab="analysis" class="settings-tab w-full text-right p-2 md:p-3 rounded-xl text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors nav-item-responsive">
+                                    إعدادات التحليل
+                                </button>
+                                <button data-tab="notifications" class="settings-tab w-full text-right p-2 md:p-3 rounded-xl text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors nav-item-responsive">
+                                    الإشعارات
+                                </button>
+                                <button data-tab="appearance" class="settings-tab w-full text-right p-2 md:p-3 rounded-xl text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors nav-item-responsive">
+                                    المظهر
+                                </button>
+                            </nav>
+                        </div>
+                    </div>
+                    
+                    <!-- محتوى الإعدادات -->
+                    <div class="lg:col-span-3">
+                        <!-- إعدادات الحساب -->
+                        <div id="account-tab" class="settings-content glass-effect rounded-2xl p-4 md:p-6 card-responsive">
+                            <h2 class="text-lg md:text-xl font-semibold text-gray-900 mb-4 md:mb-6">معلومات الحساب</h2>
+                            
+                            <div class="space-y-4 md:space-y-6">
+                                <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6 space-x-reverse">
+                                    <div class="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center">
+                                        <span class="text-white font-bold text-xl user-avatar">MA</span>
+                                    </div>
+                                    <div class="text-center sm:text-right">
+                                        <button class="bg-gray-100 text-gray-700 px-3 md:px-4 py-2 rounded-xl font-medium hover:bg-gray-200 transition-colors btn-responsive">
+                                            تغيير الصورة
+                                        </button>
+                                        <p class="text-xs md:text-sm text-gray-500 mt-2">JPG, PNG أو GIF. الحجم الأقصى 2MB</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">الاسم الكامل</label>
+                                        <input type="text" value="محمد أحمد" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 md:px-4 py-2 md:py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 form-input-responsive">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">البريد الإلكتروني</label>
+                                        <input type="email" value="mohamed@example.com" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 md:px-4 py-2 md:py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 form-input-responsive">
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="font-medium text-gray-900 mb-3 md:mb-4 text-sm md:text-base">تحديث كلمة المرور</h3>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">كلمة المرور الحالية</label>
+                                            <input type="password" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 md:px-4 py-2 md:py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 form-input-responsive">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">كلمة المرور الجديدة</label>
+                                            <input type="password" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 md:px-4 py-2 md:py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 form-input-responsive">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <button class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 md:px-6 py-2 md:py-3 rounded-xl font-semibold hover:shadow-lg transition-shadow btn-responsive">
+                                    حفظ التغييرات
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- إعدادات التحليل -->
+                        <div id="analysis-tab" class="settings-content glass-effect rounded-2xl p-4 md:p-6 card-responsive hidden">
+                            <h2 class="text-lg md:text-xl font-semibold text-gray-900 mb-4 md:mb-6">إعدادات التحليل</h2>
+                            
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="font-medium text-gray-900 mb-3 text-sm md:text-base">عدد المنشورات للتحليل</h3>
+                                    <div class="flex items-center space-x-4 space-x-reverse">
+                                        <input type="range" min="100" max="1000" value="500" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                                        <span class="text-gray-700 font-medium min-w-[60px] text-center">500</span>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-2">حدد عدد المنشورات التي تريد تحليلها من صفحة الفيسبوك</p>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="font-medium text-gray-900 mb-3 text-sm md:text-base">سرعة التحليل</h3>
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                        <label class="flex items-center space-x-2 space-x-reverse p-3 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50">
+                                            <input type="radio" name="speed" value="fast" class="text-blue-600" checked>
+                                            <span class="flex-1">سريع</span>
+                                        </label>
+                                        <label class="flex items-center space-x-2 space-x-reverse p-3 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50">
+                                            <input type="radio" name="speed" value="balanced" class="text-blue-600">
+                                            <span class="flex-1">متوازن</span>
+                                        </label>
+                                        <label class="flex items-center space-x-2 space-x-reverse p-3 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50">
+                                            <input type="radio" name="speed" value="accurate" class="text-blue-600">
+                                            <span class="flex-1">دقيق</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="font-medium text-gray-900 mb-3 text-sm md:text-base">تلقائياً أحفظ النتائج لمدة:</h3>
+                                    <select class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 md:px-4 py-2 md:py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 form-input-responsive">
+                                        <option value="week">أسبوع</option>
+                                        <option value="month" selected>شهر</option>
+                                        <option value="3months">3 أشهر</option>
+                                        <option value="6months">6 أشهر</option>
+                                        <option value="year">سنة</option>
+                                    </select>
+                                </div>
+                                
+                                <button class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 md:px-6 py-2 md:py-3 rounded-xl font-semibold hover:shadow-lg transition-shadow btn-responsive">
+                                    حفظ الإعدادات
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- إعدادات الإشعارات -->
+                        <div id="notifications-tab" class="settings-content glass-effect rounded-2xl p-4 md:p-6 card-responsive hidden">
+                            <h2 class="text-lg md:text-xl font-semibold text-gray-900 mb-4 md:mb-6">إعدادات الإشعارات</h2>
+                            
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between p-3 border border-gray-200 rounded-xl">
+                                    <div>
+                                        <h3 class="font-medium text-gray-900 text-sm md:text-base">إشعارات البريد الإلكتروني</h3>
+                                        <p class="text-xs text-gray-600">استلام تنبيهات على بريدك الإلكتروني</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer" checked>
+                                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                    </label>
+                                </div>
+                                
+                                <div class="flex items-center justify-between p-3 border border-gray-200 rounded-xl">
+                                    <div>
+                                        <h3 class="font-medium text-gray-900 text-sm md:text-base">إشعارات التطبيق</h3>
+                                        <p class="text-xs text-gray-600">عرض الإشعارات داخل التطبيق</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer" checked>
+                                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                    </label>
+                                </div>
+                                
+                                <div class="flex items-center justify-between p-3 border border-gray-200 rounded-xl">
+                                    <div>
+                                        <h3 class="font-medium text-gray-900 text-sm md:text-base">تنبيهات النتائج الجاهزة</h3>
+                                        <p class="text-xs text-gray-600">إشعار عند اكتمال التحليل</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer" checked>
+                                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                    </label>
+                                </div>
+                                
+                                <div class="flex items-center justify-between p-3 border border-gray-200 rounded-xl">
+                                    <div>
+                                        <h3 class="font-medium text-gray-900 text-sm md:text-base">إشعارات التحديثات</h3>
+                                        <p class="text-xs text-gray-600">إشعارات حول التحديثات الجديدة</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer">
+                                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                    </label>
+                                </div>
+                                
+                                <button class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 md:px-6 py-2 md:py-3 rounded-xl font-semibold hover:shadow-lg transition-shadow btn-responsive mt-4">
+                                    حفظ الإعدادات
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- إعدادات المظهر -->
+                        <div id="appearance-tab" class="settings-content glass-effect rounded-2xl p-4 md:p-6 card-responsive hidden">
+                            <h2 class="text-lg md:text-xl font-semibold text-gray-900 mb-4 md:mb-6">إعدادات المظهر</h2>
+                            
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="font-medium text-gray-900 mb-3 text-sm md:text-base">وضع العرض</h3>
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                        <label class="flex flex-col items-center p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50">
+                                            <input type="radio" name="theme" value="light" class="text-blue-600" checked>
+                                            <i data-lucide="sun" class="w-8 h-8 text-yellow-500 mt-2"></i>
+                                            <span class="mt-2">فاتح</span>
+                                        </label>
+                                        <label class="flex flex-col items-center p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50">
+                                            <input type="radio" name="theme" value="dark" class="text-blue-600">
+                                            <i data-lucide="moon" class="w-8 h-8 text-indigo-500 mt-2"></i>
+                                            <span class="mt-2">غامق</span>
+                                        </label>
+                                        <label class="flex flex-col items-center p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50">
+                                            <input type="radio" name="theme" value="auto" class="text-blue-600">
+                                            <i data-lucide="monitor" class="w-8 h-8 text-gray-500 mt-2"></i>
+                                            <span class="mt-2">تلقائي</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="font-medium text-gray-900 mb-3 text-sm md:text-base">حجم الخط</h3>
+                                    <div class="flex items-center space-x-4 space-x-reverse">
+                                        <button class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200">
+                                            <i data-lucide="minus" class="w-4 h-4"></i>
+                                        </button>
+                                        <span class="text-gray-700 font-medium">متوسط</span>
+                                        <button class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200">
+                                            <i data-lucide="plus" class="w-4 h-4"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="font-medium text-gray-900 mb-3 text-sm md:text-base">لون السمة</h3>
+                                    <div class="flex space-x-3 space-x-reverse">
+                                        <div class="w-10 h-10 bg-blue-500 rounded-full cursor-pointer border-2 border-blue-700"></div>
+                                        <div class="w-10 h-10 bg-purple-500 rounded-full cursor-pointer"></div>
+                                        <div class="w-10 h-10 bg-green-500 rounded-full cursor-pointer"></div>
+                                        <div class="w-10 h-10 bg-red-500 rounded-full cursor-pointer"></div>
+                                        <div class="w-10 h-10 bg-indigo-500 rounded-full cursor-pointer"></div>
+                                    </div>
+                                </div>
+                                
+                                <button class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 md:px-6 py-2 md:py-3 rounded-xl font-semibold hover:shadow-lg transition-shadow btn-responsive">
+                                    تطبيق التغييرات
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- طبقة التعتيم للجوال -->
+        <div id="overlay" class="overlay"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/navigation.js"></script>
+    <script>
+        // إدارة تبويبات الإعدادات
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.settings-tab');
+            const contents = document.querySelectorAll('.settings-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // إزالة النشاط من جميع الأزرار
+                    tabs.forEach(t => {
+                        t.classList.remove('bg-blue-50', 'text-blue-600');
+                        t.classList.add('text-gray-700', 'hover:bg-blue-50', 'hover:text-blue-600');
+                    });
+                    
+                    // إضافة النشاط للزر المحدد
+                    this.classList.add('bg-blue-50', 'text-blue-600');
+                    this.classList.remove('text-gray-700', 'hover:bg-blue-50', 'hover:text-blue-600');
+                    
+                    // إخفاء جميع المحتويات
+                    contents.forEach(content => {
+                        content.classList.add('hidden');
+                    });
+                    
+                    // إظهار المحتوى المحدد
+                    document.getElementById(`${tabId}-tab`).classList.remove('hidden');
+                });
+            });
+            
+            // تحديث معلومات المستخدم
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if (user) {
+                const userElements = document.querySelectorAll('.user-name, .user-email, .user-avatar');
+                userElements.forEach(element => {
+                    if (element.classList.contains('user-name')) {
+                        element.textContent = user.name;
+                    } else if (element.classList.contains('user-email')) {
+                        element.textContent = user.email;
+                    } else if (element.classList.contains('user-avatar')) {
+                        element.textContent = user.avatar;
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
